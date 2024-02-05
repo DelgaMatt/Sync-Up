@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:sync_up/screens/landing_screen.dart';
+import 'package:sync_up/pages/auth_page.dart';
 
 final theme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
     brightness: Brightness.dark,
-    seedColor: Color.fromARGB(255, 0, 0, 0),
+    seedColor: Colors.black,
   ),
 );
 
@@ -22,7 +22,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
-      home: 
+      home: const AuthPage()
     );
   }
 }
