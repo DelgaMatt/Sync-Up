@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:sync_up/main.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -17,18 +19,51 @@ class AuthPageState extends State<AuthPage> {
   var _enteredPassword = '';
   var _isAuthenticating = false;
 
-  void _submit() {
-     final isValid = _formKey.currentState!.validate();
+  void _submit() async {
+    //  final isValid = _formKey.currentState!.validate();
 
-    if (!isValid || !_isLogin == null) {
-      // show error message..
-      return;
-    }
+    // if (!isValid || !_isLogin == null) {
+    //   // show error message..
+    //   return;
+    // }
 
     _formKey.currentState!.save();
     // allows us the ability to add the onSaved function
 
-    return;
+    // try {
+
+    //   setState(() {
+    //     _isAuthenticating = true;
+    //   });
+
+    // if (_isLogin) {
+    //   // final userCredentials =
+    //   // await _firebase.signInWithEmailAndPassword(
+    //   //     email: _enteredEmail, password: _enteredPassword);
+    // } else {
+    final sm = ScaffoldMessenger.of(context);
+    final authResponse = await supabase.auth.signUp(
+      email: _enteredEmail,
+      password: _enteredPassword,
+    );
+
+    sm.showSnackBar(
+        SnackBar(content: Text("Logged In: ${authResponse.user!.email!}")));
+    //   }
+    // } on ... catch (error) {
+    //   if (error.code == 'email-already-in-use') {
+    //     // ..
+    //   }
+    //   ScaffoldMessenger.of(context).clearSnackBars();
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(
+    //       content: Text(error.message ?? 'Authentication Failed'),
+    //     ),
+    //   );
+    //   setState(() {
+    //     _isAuthenticating = false;
+    //   });
+    // }
   }
 
   @override
@@ -100,31 +135,29 @@ class AuthPageState extends State<AuthPage> {
                                   _enteredEmail = value!;
                                 },
                               ),
-                            // if (!_isLogin)
-                              TextFormField(
-                                style: TextStyle(
+                            if (!_isLogin)
+                            TextFormField(
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
+                              decoration: InputDecoration(
+                                labelText: 'Username',
+                                floatingLabelStyle: TextStyle(
                                     color:
                                         Theme.of(context).colorScheme.primary),
-                                decoration: InputDecoration(
-                                  labelText: 'Username',
-                                  floatingLabelStyle: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
-                                ),
-                                enableSuggestions: false,
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.isEmpty ||
-                                      value.trim().length < 4) {
-                                    return 'Please enter at least 4 characters';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _enteredUsername = value!;
-                                },
                               ),
+                              enableSuggestions: false,
+                              validator: (value) {
+                                if (value == null ||
+                                    value.isEmpty ||
+                                    value.trim().length < 4) {
+                                  return 'Please enter at least 4 characters';
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                _enteredUsername = value!;
+                              },
+                            ),
                             TextFormField(
                               style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary),
