@@ -22,8 +22,6 @@ Future<void> main() async {
   runApp(const ProviderScope(child: App()));
 }
 
-final supabase = Supabase.instance.client;
-
 class App extends StatelessWidget {
   const App({super.key});
 
