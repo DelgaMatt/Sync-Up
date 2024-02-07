@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:sync_up/main.dart';
 
 final supabase = Supabase.instance.client;
 
@@ -22,13 +21,6 @@ class AuthPageState extends State<AuthPage> {
   var _isAuthenticating = false;
 
   void _submit() async {
-    //  final isValid = _formKey.currentState!.validate();
-
-    // if (!isValid || !_isLogin == null) {
-    //   // show error message..
-    //   return;
-    // }
-
     _formKey.currentState!.save();
     // allows us the ability to add the onSaved function
 
@@ -39,35 +31,53 @@ class AuthPageState extends State<AuthPage> {
 
       if (_isLogin) {
         final sm = ScaffoldMessenger.of(context);
-        final authResponse = await supabase.auth.signInWithPassword(
+
+        // authorization for signing in
+        final AuthResponse response = await supabase.auth.signInWithPassword(
             email: _enteredEmail, password: _enteredPassword);
 
+        final Session? session = response.session;
+        final User? user = supabase.auth.currentUser;
+
+        print(session);
+        print(user);
+
         sm.showSnackBar(
-            SnackBar(content: Text('logged in: ${authResponse.user!.email!}')));
+          SnackBar(content: Text('logged in: ${response.user!.email!}')),
+        );
       } else {
         final sm = ScaffoldMessenger.of(context);
-        final authResponse = await supabase.auth.signUp(
+
+        // Authorization for sign up
+        final AuthResponse response = await supabase.auth.signUp(
           email: _enteredEmail,
           password: _enteredPassword,
         );
 
+        // sm.clearSnackBars();
         sm.showSnackBar(
-            SnackBar(content: Text("SignedUp/LoggedIn: ${authResponse.user!.email!}")));
+          SnackBar(
+              content: Text("SignedUp/LoggedIn: ${response.user!.email!}")),
+        );
+
+        print(response);
+
+        // Storing User to database
+        if (response.user == null) return;
+
+        await supabase.from('profiles').insert(
+            {'id': response.user!.id, 'username': _enteredUsername})
+            .then((response) => print("then $response"))
+            .catchError((e) => print("catch $e"));
       }
     } catch (error) {
-
       if (error.toString().contains('Email already taken')) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Email is already taken. Please choose another email')));
+        const SnackBar(
+            content:
+                Text('Email is already taken. Please choose another email'));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Something Went wrong..')));
-
+        const SnackBar(content: Text('Something Went wrong..'));
       }
-      // ScaffoldMessenger.of(context).clearSnackBars();
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text(error.message ?? 'Authentication Failed'),
-      //   ),
-      // );
       setState(() {
         _isAuthenticating = false;
       });
@@ -78,11 +88,11 @@ class AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.8),
-            Theme.of(context).colorScheme.primary.withOpacity(0.6),
-          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              colors: [Colors.black, Colors.black12],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight),
         ),
         child: Center(
           child: SingleChildScrollView(
@@ -117,32 +127,30 @@ class AuthPageState extends State<AuthPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             // if (!_isLogin)
-                              TextFormField(
-                                style: TextStyle(
+                            TextFormField(
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
+                              decoration: InputDecoration(
+                                labelText: 'Email Address',
+                                floatingLabelStyle: TextStyle(
                                     color:
                                         Theme.of(context).colorScheme.primary),
-                                decoration: InputDecoration(
-                                  labelText: 'Email Address',
-                                  floatingLabelStyle: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                                autocorrect: false,
-                                textCapitalization: TextCapitalization.none,
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.trim().isEmpty ||
-                                      !value.contains('@')) {
-                                    return 'Please enter a valid email address';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _enteredEmail = value!;
-                                },
                               ),
+                              keyboardType: TextInputType.emailAddress,
+                              autocorrect: false,
+                              textCapitalization: TextCapitalization.none,
+                              validator: (value) {
+                                if (value == null ||
+                                    value.trim().isEmpty ||
+                                    !value.contains('@')) {
+                                  return 'Please enter a valid email address';
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                _enteredEmail = value!;
+                              },
+                            ),
                             if (!_isLogin)
                               TextFormField(
                                 style: TextStyle(
