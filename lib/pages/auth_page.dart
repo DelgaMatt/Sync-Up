@@ -30,7 +30,7 @@ class AuthPageState extends State<AuthPage> {
       });
 
       if (_isLogin) {
-        final sm = ScaffoldMessenger.of(context);
+        // final sm = ScaffoldMessenger.of(context);
 
         // authorization for signing in
         final AuthResponse response = await supabase.auth.signInWithPassword(
@@ -42,11 +42,11 @@ class AuthPageState extends State<AuthPage> {
         print(session);
         print(user);
 
-        sm.showSnackBar(
-          SnackBar(content: Text('logged in: ${response.user!.email!}')),
-        );
+        // sm.showSnackBar(
+        //   SnackBar(content: Text('logged in: ${response.user!.email!}')),
+        // );
       } else {
-        final sm = ScaffoldMessenger.of(context);
+        // final sm = ScaffoldMessenger.of(context);
 
         // Authorization for sign up
         final AuthResponse response = await supabase.auth.signUp(
@@ -55,10 +55,10 @@ class AuthPageState extends State<AuthPage> {
         );
 
         // sm.clearSnackBars();
-        sm.showSnackBar(
-          SnackBar(
-              content: Text("SignedUp/LoggedIn: ${response.user!.email!}")),
-        );
+        // sm.showSnackBar(
+        //   SnackBar(
+        //       content: Text("SignedUp/LoggedIn: ${response.user!.email!}")),
+        // );
 
         print(response);
 
@@ -76,11 +76,12 @@ class AuthPageState extends State<AuthPage> {
             content:
                 Text('Email is already taken. Please choose another email'));
       } else {
-        const SnackBar(content: Text('Something Went wrong..'));
+        const SnackBar(content: Text('Something Went wrong..'),
+        );
       }
-      setState(() {
-        _isAuthenticating = false;
-      });
+          setState(() {
+      _isAuthenticating = false;
+    });
     }
   }
 

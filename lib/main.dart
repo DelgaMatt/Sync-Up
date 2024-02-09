@@ -32,10 +32,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
-      home:StreamBuilder(
+      home: StreamBuilder(
         stream: supabase.auth.onAuthStateChange,
         builder: (ctx, snapshot) {
-          // if firebase is still waiting or loading the token..
+          // if supabase is still waiting or loading the token..
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const SplashPage();
           }
