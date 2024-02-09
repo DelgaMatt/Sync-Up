@@ -4,6 +4,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sync_up/config/app_config.dart';
 
 import 'package:sync_up/pages/auth_page.dart';
+import 'package:sync_up/pages/home_page.dart';
+import 'package:sync_up/pages/splash_page.dart';
 
 final theme = ThemeData(
   useMaterial3: true,
@@ -30,7 +32,21 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
-      home: const AuthPage()
+      home:StreamBuilder(
+        stream: supabase.auth.onAuthStateChange,
+        builder: (ctx, snapshot) {
+          // if firebase is still waiting or loading the token..
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SplashPage();
+          }
+
+          if (snapshot.hasData) {
+            return const HomePage();
+          }
+
+          return const AuthPage();
+        },
+      ),
     );
   }
 }
