@@ -18,11 +18,11 @@ class AuthPageState extends State<AuthPage> {
   var _enteredEmail = '';
   var _enteredUsername = '';
   var _enteredPassword = '';
+
   var _isAuthenticating = false;
 
   void _submit() async {
     _formKey.currentState!.save();
-    // allows us the ability to add the onSaved function
 
     try {
       setState(() {
@@ -30,7 +30,7 @@ class AuthPageState extends State<AuthPage> {
       });
 
       if (_isLogin) {
-        // final sm = ScaffoldMessenger.of(context);
+        final sm = ScaffoldMessenger.of(context);
 
         // authorization for signing in
         final AuthResponse response = await supabase.auth.signInWithPassword(
@@ -42,11 +42,11 @@ class AuthPageState extends State<AuthPage> {
         print(session);
         print(user);
 
-        // sm.showSnackBar(
-        //   SnackBar(content: Text('logged in: ${response.user!.email!}')),
-        // );
+        sm.showSnackBar(
+          SnackBar(content: Text('logged in: ${response.user!.email!}')),
+        );
       } else {
-        // final sm = ScaffoldMessenger.of(context);
+        final sm = ScaffoldMessenger.of(context);
 
         // Authorization for sign up
         final AuthResponse response = await supabase.auth.signUp(
@@ -54,19 +54,20 @@ class AuthPageState extends State<AuthPage> {
           password: _enteredPassword,
         );
 
-        // sm.clearSnackBars();
-        // sm.showSnackBar(
-        //   SnackBar(
-        //       content: Text("SignedUp/LoggedIn: ${response.user!.email!}")),
-        // );
+        sm.clearSnackBars();
+        sm.showSnackBar(
+          SnackBar(
+              content: Text("SignedUp/LoggedIn: ${response.user!.email!}")),
+        );
 
         print(response);
 
         // Storing User to database
         if (response.user == null) return;
 
-        await supabase.from('profiles').insert(
-            {'id': response.user!.id, 'username': _enteredUsername})
+        await supabase
+            .from('profiles')
+            .insert({'id': response.user!.id, 'username': _enteredUsername})
             .then((response) => print("then $response"))
             .catchError((e) => print("catch $e"));
       }
@@ -76,13 +77,21 @@ class AuthPageState extends State<AuthPage> {
             content:
                 Text('Email is already taken. Please choose another email'));
       } else {
-        const SnackBar(content: Text('Something Went wrong..'),
+        const SnackBar(
+          content: Text('Something Went wrong..'),
         );
       }
-          setState(() {
+
+      setState(() {
+        _isAuthenticating = false;
+      });
+      return;
+    }
+
+    setState(() {
       _isAuthenticating = false;
     });
-    }
+
   }
 
   @override

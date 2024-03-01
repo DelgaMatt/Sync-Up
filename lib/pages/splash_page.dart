@@ -8,10 +8,13 @@ class SplashPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sync Up'),
+        titleTextStyle:
+            TextStyle(
+              color: Theme.of(context).colorScheme.onBackground,
+              fontSize: 25
+              ),      
       ),
-      body: const Center(
-        child: Text('Loading...'),
-      ),
+      body: const Text('Loading..'),
     );
   }
 }
