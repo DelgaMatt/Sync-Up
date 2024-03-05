@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sync_up/app/config/app_config.dart';
-
 import 'package:sync_up/app/router/sync_router.dart';
-
-// import 'package:sync_up/pages/auth_page.dart';
-// import 'package:sync_up/pages/home_page.dart';
-import 'package:sync_up/pages/splash_page.dart';
+import 'package:sync_up/entities/providers/auth_provider.dart';
 
 final theme = ThemeData(
   useMaterial3: true,
@@ -27,33 +23,18 @@ Future<void> main() async {
   runApp(const ProviderScope(child: App()));
 }
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({super.key});
-
   static const String title = 'Sync Up';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final goRouter = ref.watch(goRouterProvider);
     return MaterialApp.router(
-      routerDelegate: syncRouter.routerDelegate,
-      routeInformationParser: syncRouter.routeInformationParser,
-      routeInformationProvider: syncRouter.routeInformationProvider,
+      routerConfig: goRouter,
+      // routerDelegate: syncRouter.routerDelegate,
+      // routeInformationParser: syncRouter.routeInformationParser,
+      // routeInformationProvider: syncRouter.routeInformationProvider,
     );
   }
 }
-
-// home: StreamBuilder(
-//         stream: supabase.auth.onAuthStateChange,
-//         builder: (ctx, snapshot) {
-//           // if supabase is still waiting or loading the token..
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return const SplashPage();
-//           }
-
-//           if (snapshot.hasData) {
-//             return const HomePage();
-//           }
-
-//           return const AuthPage();
-//         },
-//       ),

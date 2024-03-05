@@ -6,7 +6,7 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   void _signOut() async {
-      final response = await supabase.auth.signOut()
+      await supabase.auth.signOut()
       .then((response) => print("success"))
       .catchError((e) => print("catch $e"));
   }

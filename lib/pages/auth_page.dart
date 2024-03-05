@@ -18,7 +18,6 @@ class AuthPageState extends State<AuthPage> {
   var _enteredEmail = '';
   var _enteredUsername = '';
   var _enteredPassword = '';
-
   var _isAuthenticating = false;
 
   void _submit() async {
@@ -100,7 +99,7 @@ class AuthPageState extends State<AuthPage> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-              colors: [Colors.black, Colors.black12],
+              colors: [Colors.black,Color.fromARGB(136, 0, 0, 0)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight),
         ),
@@ -117,7 +116,7 @@ class AuthPageState extends State<AuthPage> {
                     right: 20,
                   ),
                   width: 400,
-                  child: Image.asset('lib/assets/images/sync_up_logo.png'),
+                  child: Image.asset('lib/assets/images/logo/sync_up_logo.png'),
                 ),
                 Card(
                   color: Theme.of(context).colorScheme.background,
