@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sync_up/features/authentication/login.dart';
-import 'package:sync_up/features/authentication/signup.dart';
+import 'package:sync_up/features/authentication/sign_up.dart';
 
 final supabase = Supabase.instance.client;
 
@@ -31,22 +31,24 @@ class AuthPageState extends State<AuthPage> {
       });
 
       if (_isLogin) {
-        final sm = ScaffoldMessenger.of(context);
+        final sm = ScaffoldMessenger.of(context); //
 
         login(enteredEmail, enteredPassword);
-        
+
         sm.showSnackBar(
           const SnackBar(content: Text('logged in')),
-        );
+        ); //
       } else {
-        final sm = ScaffoldMessenger.of(context);
+        final sm = ScaffoldMessenger.of(context); //
 
         signup(enteredEmail, enteredPassword, enteredUsername);
 
         sm.showSnackBar(
           const SnackBar(content: Text("SignedUp/LoggedIn")),
-        );
+        ); //
       }
+
+    
     } catch (error) {
       if (error.toString().contains('Email already taken')) {
         const SnackBar(
@@ -63,10 +65,10 @@ class AuthPageState extends State<AuthPage> {
       });
       return;
     }
-    
+
     setState(() {
       _isAuthenticating = false;
-    });
+    }); //stop spinning icon indicator upon completion - can be deteled
   }
 
   @override

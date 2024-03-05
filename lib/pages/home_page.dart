@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:sync_up/pages/auth_page.dart';
+import 'package:sync_up/features/authentication/sign_out.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  void _signOut() async {
-      await supabase.auth.signOut()
-      .then((response) => print("success"))
-      .catchError((e) => print("catch $e"));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +16,7 @@ class HomePage extends StatelessWidget {
               ),
         actions: [
           IconButton(
-              onPressed: _signOut,
+              onPressed: signOut,
               icon: Icon(
                 Icons.exit_to_app,
                 color: Theme.of(context).colorScheme.onBackground,
