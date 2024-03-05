@@ -77,7 +77,7 @@ class AuthPageState extends State<AuthPage> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-              colors: [Colors.black, Color.fromARGB(136, 0, 0, 0)],
+              colors: [Colors.black, Color.fromARGB(133, 61, 61, 61)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight),
         ),
@@ -89,22 +89,23 @@ class AuthPageState extends State<AuthPage> {
                 Container(
                   margin: const EdgeInsets.only(
                     top: 30,
-                    bottom: 0,
+                    bottom: 40,
                     left: 20,
                     right: 20,
                   ),
-                  width: 400,
+                  width: 300,
                   child: Image.asset('lib/assets/images/logo/sync_up_logo.png'),
                 ),
                 Card(
-                  color: Theme.of(context).colorScheme.background,
-                  // shadowColor: Color.fromARGB(255, 221, 162, 13),
-                  elevation: 2.0,
+                  color: Theme.of(context).colorScheme.primary,
+                  shadowColor: Theme.of(context).colorScheme.tertiary,
+                  surfaceTintColor: Theme.of(context).colorScheme.tertiary,
+                  elevation: 1.0,
                   margin: const EdgeInsets.all(20),
                   shape: RoundedRectangleBorder(
                       borderRadius: const BorderRadius.all(Radius.circular(40)),
                       side: BorderSide(
-                          color: Theme.of(context).colorScheme.secondary)),
+                          color: Theme.of(context).colorScheme.tertiary, width: 2.0)),
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
@@ -115,13 +116,22 @@ class AuthPageState extends State<AuthPage> {
                           children: [
                             // if (!_isLogin)
                             TextFormField(
-                              style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary),
+                              style: const TextStyle(
+                                color: Colors.white),
                               decoration: InputDecoration(
                                 labelText: 'Email Address',
+                                labelStyle: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+                                fillColor: Colors.white,
+                                focusedBorder:OutlineInputBorder(
+                                  borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ),
+                                enabledBorder: UnderlineInputBorder(      
+                                  borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),   
+                                ),  
                                 floatingLabelStyle: TextStyle(
                                     color:
-                                        Theme.of(context).colorScheme.primary),
+                                        Theme.of(context).colorScheme.tertiary),
                               ),
                               keyboardType: TextInputType.emailAddress,
                               autocorrect: false,
@@ -138,17 +148,23 @@ class AuthPageState extends State<AuthPage> {
                                 enteredEmail = value!;
                               },
                             ),
+                            const SizedBox(height: 10.0,),
                             if (!_isLogin)
                               TextFormField(
                                 style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
+                                    color: Theme.of(context).colorScheme.tertiary),
                                 decoration: InputDecoration(
                                   labelText: 'Username',
-                                  floatingLabelStyle: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
+                                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+                                  fillColor: Colors.white,
+                                  focusedBorder:OutlineInputBorder(
+                                    borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(      
+                                    borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),   
+                                  ),  
+                                  floatingLabelStyle: TextStyle(color: Theme.of(context).colorScheme.tertiary),
                                 ),
                                 enableSuggestions: false,
                                 validator: (value) {
@@ -163,14 +179,23 @@ class AuthPageState extends State<AuthPage> {
                                   enteredUsername = value!;
                                 },
                               ),
+                              const SizedBox(height: 10.0,),
                             TextFormField(
                               style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary),
+                                color: Theme.of(context).colorScheme.tertiary),
                               decoration: InputDecoration(
                                 labelText: 'Password',
+                                labelStyle: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+                                focusedBorder:OutlineInputBorder(
+                                  borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ),
+                                enabledBorder: UnderlineInputBorder(      
+                                  borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),   
+                                ),  
                                 floatingLabelStyle: TextStyle(
                                     color:
-                                        Theme.of(context).colorScheme.primary),
+                                        Theme.of(context).colorScheme.tertiary),
                               ),
                               obscureText: true,
                               validator: (value) {
@@ -192,7 +217,8 @@ class AuthPageState extends State<AuthPage> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Theme.of(context)
                                       .colorScheme
-                                      .primaryContainer,
+                                      .secondary,
+                                  textStyle: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 15.0, fontWeight: FontWeight.bold),
                                 ),
                                 child: Text(_isLogin ? 'Login' : 'Signup'),
                               ),
@@ -204,7 +230,8 @@ class AuthPageState extends State<AuthPage> {
                               },
                               child: Text(_isLogin
                                   ? 'Create an Account'
-                                  : 'I already have an account'),
+                                  : 'I already have an account',
+                                  style: TextStyle(color: Theme.of(context).colorScheme.tertiary),),
                             ),
                           ],
                         ),
