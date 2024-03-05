@@ -5,14 +5,6 @@ import 'package:sync_up/app/config/app_config.dart';
 import 'package:sync_up/app/router/sync_router.dart';
 import 'package:sync_up/entities/providers/auth_provider.dart';
 
-final theme = ThemeData(
-  useMaterial3: true,
-  colorScheme: ColorScheme.fromSeed(
-    brightness: Brightness.dark,
-    seedColor: Colors.black,
-  ),
-);
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
