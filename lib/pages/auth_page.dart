@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:sync_up/features/authentication/login.dart';
+import 'package:sync_up/features/authentication/signup.dart';
 
 final supabase = Supabase.instance.client;
 
@@ -15,9 +17,9 @@ class AuthPage extends StatefulWidget {
 class AuthPageState extends State<AuthPage> {
   final _formKey = GlobalKey<FormState>();
   var _isLogin = true;
-  var _enteredEmail = '';
-  var _enteredUsername = '';
-  var _enteredPassword = '';
+  var enteredEmail = '';
+  var enteredUsername = '';
+  var enteredPassword = '';
   var _isAuthenticating = false;
 
   void _submit() async {
@@ -31,44 +33,19 @@ class AuthPageState extends State<AuthPage> {
       if (_isLogin) {
         final sm = ScaffoldMessenger.of(context);
 
-        // authorization for signing in
-        final AuthResponse response = await supabase.auth.signInWithPassword(
-            email: _enteredEmail, password: _enteredPassword);
-
-        final Session? session = response.session;
-        final User? user = supabase.auth.currentUser;
-
-        print(session);
-        print(user);
-
+        login(enteredEmail, enteredPassword);
+        
         sm.showSnackBar(
-          SnackBar(content: Text('logged in: ${response.user!.email!}')),
+          const SnackBar(content: Text('logged in')),
         );
       } else {
         final sm = ScaffoldMessenger.of(context);
 
-        // Authorization for sign up
-        final AuthResponse response = await supabase.auth.signUp(
-          email: _enteredEmail,
-          password: _enteredPassword,
-        );
+        signup(enteredEmail, enteredPassword, enteredUsername);
 
-        sm.clearSnackBars();
         sm.showSnackBar(
-          SnackBar(
-              content: Text("SignedUp/LoggedIn: ${response.user!.email!}")),
+          const SnackBar(content: Text("SignedUp/LoggedIn")),
         );
-
-        print(response);
-
-        // Storing User to database
-        if (response.user == null) return;
-
-        await supabase
-            .from('profiles')
-            .insert({'id': response.user!.id, 'username': _enteredUsername})
-            .then((response) => print("then $response"))
-            .catchError((e) => print("catch $e"));
       }
     } catch (error) {
       if (error.toString().contains('Email already taken')) {
@@ -86,11 +63,10 @@ class AuthPageState extends State<AuthPage> {
       });
       return;
     }
-
+    
     setState(() {
       _isAuthenticating = false;
     });
-
   }
 
   @override
@@ -99,7 +75,7 @@ class AuthPageState extends State<AuthPage> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-              colors: [Colors.black,Color.fromARGB(136, 0, 0, 0)],
+              colors: [Colors.black, Color.fromARGB(136, 0, 0, 0)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight),
         ),
@@ -157,7 +133,7 @@ class AuthPageState extends State<AuthPage> {
                                 return null;
                               },
                               onSaved: (value) {
-                                _enteredEmail = value!;
+                                enteredEmail = value!;
                               },
                             ),
                             if (!_isLogin)
@@ -182,7 +158,7 @@ class AuthPageState extends State<AuthPage> {
                                   return null;
                                 },
                                 onSaved: (value) {
-                                  _enteredUsername = value!;
+                                  enteredUsername = value!;
                                 },
                               ),
                             TextFormField(
@@ -202,7 +178,7 @@ class AuthPageState extends State<AuthPage> {
                                 return null;
                               },
                               onSaved: (value) {
-                                _enteredPassword = value!;
+                                enteredPassword = value!;
                               },
                             ),
                             const SizedBox(height: 12),

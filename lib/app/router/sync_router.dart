@@ -5,7 +5,7 @@ import 'package:sync_up/pages/home_page.dart';
 import 'package:sync_up/pages/splash_page.dart';
 
 enum RoutePath {
-  initial(path: '/'),
+  initial(path: '/auth'),
   home(path: 'home'),
   contact(path: 'contact'),
   events(path: 'events'),
@@ -16,41 +16,39 @@ enum RoutePath {
 }
 
 final GoRouter syncRouter =
-    GoRouter(
-      initialLocation: RoutePath.initial.path, 
-      routes: <GoRoute>[
+    GoRouter(initialLocation: RoutePath.initial.path, routes: <GoRoute>[
   GoRoute(
     redirect: (BuildContext context, GoRouterState state) {
       if (supabase.auth.currentSession != null) {
-        return RoutePath.home.path;
+        return RoutePath.initial.path;
       } else {
         return null;
       }
     },
     path: RoutePath.initial.path,
-    builder: (BuildContext context, GoRouterState state) => const AuthPage(),
+    pageBuilder: (BuildContext context, GoRouterState state) => MaterialPage(child: AuthPage()),
     routes: <GoRoute>[
       GoRoute(
-        path: 'home',
-        pageBuilder: (context, state) => const MaterialPage(child: HomePage()),
-        ),
+        path: RoutePath.home.path,
+        builder: (context, state) => const HomePage(),
+      ),
       // GoRoute(
-      //   path: 'contact',
+      //   path: RoutePath.contact.path,
       //   pageBuilder: (context, state) => const MaterialPage(child: ContactPage()),
       //   ),
       // GoRoute(
-      //   path: 'events',
+      //   path: RoutePath.events.path,
       //   pageBuilder: (context, state) => const MaterialPage(child: EventsPage()),
-      //   ),  
+      //   ),
       // GoRoute(
-      //   path: 'admin',
+      //   path: RoutePath.admin.path,
       //   pageBuilder: (context, state) => const MaterialPage(child: AdminPage()),
-      //   ),  
+      //   ),
       GoRoute(
         path: 'splash',
-        pageBuilder: (context, state) => const MaterialPage(child: SplashPage()),
-        ),          
+        pageBuilder: (context, state) =>
+            const MaterialPage(child: SplashPage()),
+      ),
     ],
   ),
 ]);
-
