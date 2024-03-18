@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sync_up/app/config/app_config.dart';
+import 'package:sync_up/app/router/sync_router.dart';
 import 'package:sync_up/app/theme/sync_up_colors.dart';
-// import 'package:sync_up/app/router/sync_router.dart';
-import 'package:sync_up/entities/providers/auth_provider.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,8 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final goRouter = ref.watch(goRouterProvider);
+    // final authstate = ref.watch(authProvider);
+    final goRouter = ref.watch(syncRouter);
     return MaterialApp.router(
       routerConfig: goRouter,
       theme: theme,

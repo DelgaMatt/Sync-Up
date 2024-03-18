@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:sync_up/features/authentication/login.dart';
-import 'package:sync_up/features/authentication/sign_up.dart';
+import 'package:sync_up/app/router/sync_router.dart';
+import 'package:sync_up/features/authentication/auth_controller.dart';
 
 final supabase = Supabase.instance.client;
 
-class AuthPage extends StatefulWidget {
+class AuthPage extends ConsumerStatefulWidget {
   const AuthPage({super.key});
 
   @override
-  State<AuthPage> createState() {
+  ConsumerState<AuthPage> createState() {
     return AuthPageState();
   }
 }
 
-class AuthPageState extends State<AuthPage> {
+class AuthPageState extends ConsumerState<AuthPage> {
   final _formKey = GlobalKey<FormState>();
   var _isLogin = true;
   var enteredEmail = '';
@@ -33,22 +35,32 @@ class AuthPageState extends State<AuthPage> {
       if (_isLogin) {
         final sm = ScaffoldMessenger.of(context); //
 
-        login(enteredEmail, enteredPassword);
+        await ref
+            .read(authProvider.notifier)
+            .login(enteredEmail, enteredPassword);
 
         sm.showSnackBar(
           const SnackBar(content: Text('logged in')),
-        ); //
-      } else {
-        final sm = ScaffoldMessenger.of(context); //
+        );
 
-        signup(enteredEmail, enteredPassword, enteredUsername);
+        if (context.mounted) {
+          context.go(RoutePath.home.path);
+        }
+      } else {
+        final sm = ScaffoldMessenger.of(context);
+
+        await ref
+          .read(authProvider.notifier)
+          .signup(enteredEmail, enteredPassword, enteredUsername);
 
         sm.showSnackBar(
           const SnackBar(content: Text("SignedUp/LoggedIn")),
-        ); //
-      }
+        ); 
 
-    
+        if (context.mounted) {
+          context.go(RoutePath.home.path);
+        }
+      }
     } catch (error) {
       if (error.toString().contains('Email already taken')) {
         const SnackBar(
@@ -105,7 +117,8 @@ class AuthPageState extends State<AuthPage> {
                   shape: RoundedRectangleBorder(
                       borderRadius: const BorderRadius.all(Radius.circular(40)),
                       side: BorderSide(
-                          color: Theme.of(context).colorScheme.tertiary, width: 2.0)),
+                          color: Theme.of(context).colorScheme.tertiary,
+                          width: 1.5)),
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
@@ -116,19 +129,24 @@ class AuthPageState extends State<AuthPage> {
                           children: [
                             // if (!_isLogin)
                             TextFormField(
-                              style: const TextStyle(
-                                color: Colors.white),
+                              style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 labelText: 'Email Address',
-                                labelStyle: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+                                labelStyle: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary),
                                 fillColor: Colors.white,
-                                focusedBorder:OutlineInputBorder(
-                                  borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 1.0),
                                   borderRadius: BorderRadius.circular(25.0),
                                 ),
-                                enabledBorder: UnderlineInputBorder(      
-                                  borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),   
-                                ),  
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary),
+                                ),
                                 floatingLabelStyle: TextStyle(
                                     color:
                                         Theme.of(context).colorScheme.tertiary),
@@ -148,23 +166,36 @@ class AuthPageState extends State<AuthPage> {
                                 enteredEmail = value!;
                               },
                             ),
-                            const SizedBox(height: 10.0,),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
                             if (!_isLogin)
                               TextFormField(
                                 style: TextStyle(
-                                    color: Theme.of(context).colorScheme.tertiary),
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary),
                                 decoration: InputDecoration(
                                   labelText: 'Username',
-                                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+                                  labelStyle: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary),
                                   fillColor: Colors.white,
-                                  focusedBorder:OutlineInputBorder(
-                                    borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.white, width: 1.0),
                                     borderRadius: BorderRadius.circular(25.0),
                                   ),
-                                  enabledBorder: UnderlineInputBorder(      
-                                    borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),   
-                                  ),  
-                                  floatingLabelStyle: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary),
+                                  ),
+                                  floatingLabelStyle: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary),
                                 ),
                                 enableSuggestions: false,
                                 validator: (value) {
@@ -179,20 +210,29 @@ class AuthPageState extends State<AuthPage> {
                                   enteredUsername = value!;
                                 },
                               ),
-                              const SizedBox(height: 10.0,),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
                             TextFormField(
                               style: TextStyle(
-                                color: Theme.of(context).colorScheme.tertiary),
+                                  color:
+                                      Theme.of(context).colorScheme.tertiary),
                               decoration: InputDecoration(
                                 labelText: 'Password',
-                                labelStyle: TextStyle(color: Theme.of(context).colorScheme.tertiary),
-                                focusedBorder:OutlineInputBorder(
-                                  borderSide: const BorderSide(color: Colors.white, width: 1.0),
+                                labelStyle: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 1.0),
                                   borderRadius: BorderRadius.circular(25.0),
                                 ),
-                                enabledBorder: UnderlineInputBorder(      
-                                  borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),   
-                                ),  
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary),
+                                ),
                                 floatingLabelStyle: TextStyle(
                                     color:
                                         Theme.of(context).colorScheme.tertiary),
@@ -215,10 +255,13 @@ class AuthPageState extends State<AuthPage> {
                               ElevatedButton(
                                 onPressed: _submit,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .secondary,
-                                  textStyle: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 15.0, fontWeight: FontWeight.bold),
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.secondary,
+                                  textStyle: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 child: Text(_isLogin ? 'Login' : 'Signup'),
                               ),
@@ -228,10 +271,14 @@ class AuthPageState extends State<AuthPage> {
                                   _isLogin = !_isLogin;
                                 });
                               },
-                              child: Text(_isLogin
-                                  ? 'Create an Account'
-                                  : 'I already have an account',
-                                  style: TextStyle(color: Theme.of(context).colorScheme.tertiary),),
+                              child: Text(
+                                _isLogin
+                                    ? 'Create an Account'
+                                    : 'I already have an account',
+                                style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary),
+                              ),
                             ),
                           ],
                         ),

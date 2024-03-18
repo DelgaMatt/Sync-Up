@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:sync_up/features/authentication/auth_controller.dart';
 import 'package:sync_up/pages/auth_page.dart';
 import 'package:sync_up/pages/home_page.dart';
 import 'package:sync_up/pages/splash_page.dart';
+
+final supabase = Supabase.instance.client;
 
 enum RoutePath {
   initial(path: '/'),
@@ -16,17 +21,21 @@ enum RoutePath {
   final String path;
 }
 
-final GoRouter syncRouter = GoRouter(
-  initialLocation: RoutePath.initial.path,
-  routes: _routes,
-  redirect: (BuildContext context, GoRouterState state) {
-    if (supabase.auth.currentSession != null) {
-      return RoutePath.home.path;
-    } else {
-      return null;
-    }
-  },
-);
+final syncRouter = Provider<GoRouter>((ref) {
+  return GoRouter(
+    initialLocation: RoutePath.initial.path,
+    routes: _routes,
+    redirect: (BuildContext context, GoRouterState state) async {
+      final authSession = await ref.read(authProvider.future);
+      // ensures that the build function is complete and we have access to a value
+      if (authSession == null && state.path != RoutePath.initial.path) {
+        return RoutePath.initial.path;
+      } else {
+        return null;
+      }
+    },
+  );
+});
 
 final _routes = [
   GoRoute(
