@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sync_up/features/authentication/auth_controller.dart';
 import 'package:sync_up/pages/auth_page.dart';
+import 'package:sync_up/pages/events_page.dart';
 import 'package:sync_up/pages/home_page.dart';
 import 'package:sync_up/pages/splash_page.dart';
 
@@ -39,7 +40,6 @@ final syncRouter = Provider<GoRouter>((ref) {
 final _routes = [
   GoRoute(
     path: RoutePath.initial.path,
-    name: 'Auth',
     pageBuilder: (context, state) => const MaterialPage(child: AuthPage()),
   ),
   GoRoute(
@@ -49,14 +49,17 @@ final _routes = [
   ),
   // GoRoute(
   //   path: RoutePath.contact.path,
+  //   name: 'Contact The Team',
   //   pageBuilder: (context, state) => const MaterialPage(child: ContactPage()),
   //   ),
-  // GoRoute(
-  //   path: RoutePath.events.path,
-  //   pageBuilder: (context, state) => const MaterialPage(child: EventsPage()),
-  //   ),
+  GoRoute(
+    path: RoutePath.events.path,
+    name: 'Events',
+    pageBuilder: (context, state) => const MaterialPage(child: EventsPage()),
+    ),
   // GoRoute(
   //   path: RoutePath.admin.path,
+  //   name: 'Admin Portal',
   //   pageBuilder: (context, state) => const MaterialPage(child: AdminPage()),
   //   ),
   GoRoute(

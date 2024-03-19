@@ -14,7 +14,7 @@ class HomePage extends ConsumerWidget {
       backgroundColor: Theme.of(context).colorScheme.primary,
       drawer: const NavDrawer(),
       appBar: AppBar(
-        title: const Text('Sync Up'),
+        title: const Text('Events'),
         titleTextStyle: TextStyle(
             color: Theme.of(context).colorScheme.tertiary, fontSize: 25),
         actions: [
