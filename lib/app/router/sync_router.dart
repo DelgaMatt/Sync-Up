@@ -26,8 +26,7 @@ final syncRouter = Provider<GoRouter>((ref) {
     initialLocation: RoutePath.initial.path,
     routes: _routes,
     redirect: (BuildContext context, GoRouterState state) async {
-      final authSession = await ref.read(authProvider.future);
-      // ensures that the build function is complete and we have access to a value
+      final authSession = await ref.read(authProvider.future); // ensures that the build function is complete and we have access to a value
       if (authSession == null && state.path != RoutePath.initial.path) {
         return RoutePath.initial.path;
       } else {
@@ -40,10 +39,12 @@ final syncRouter = Provider<GoRouter>((ref) {
 final _routes = [
   GoRoute(
     path: RoutePath.initial.path,
+    name: 'Auth',
     pageBuilder: (context, state) => const MaterialPage(child: AuthPage()),
   ),
   GoRoute(
     path: RoutePath.home.path,
+    name: 'Home',
     pageBuilder: (context, state) => const MaterialPage(child: HomePage()),
   ),
   // GoRoute(

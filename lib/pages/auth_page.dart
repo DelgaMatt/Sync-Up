@@ -77,10 +77,6 @@ class AuthPageState extends ConsumerState<AuthPage> {
       });
       return;
     }
-
-    setState(() {
-      _isAuthenticating = false;
-    }); //stop spinning icon indicator upon completion - can be deteled
   }
 
   @override
@@ -250,7 +246,7 @@ class AuthPageState extends ConsumerState<AuthPage> {
                             ),
                             const SizedBox(height: 12),
                             if (_isAuthenticating)
-                              const CircularProgressIndicator(),
+                              const CircularProgressIndicator(color: Colors.white,),
                             if (!_isAuthenticating)
                               ElevatedButton(
                                 onPressed: _submit,

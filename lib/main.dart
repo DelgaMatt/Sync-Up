@@ -22,14 +22,10 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final authstate = ref.watch(authProvider);
     final goRouter = ref.watch(syncRouter);
     return MaterialApp.router(
       routerConfig: goRouter,
       theme: theme,
-      // routerDelegate: syncRouter.routerDelegate,
-      // routeInformationParser: syncRouter.routeInformationParser,
-      // routeInformationProvider: syncRouter.routeInformationProvider,
     );
   }
 }

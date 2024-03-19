@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:sync_up/app/router/sync_router.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({super.key});
-
-  // final void Function(String identifier) onSelectScreen;
 
   @override
   Widget build(BuildContext context) {
