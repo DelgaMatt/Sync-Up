@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:sync_up/app/router/sync_router.dart';
-import 'package:sync_up/features/authentication/auth_controller.dart';
+
+import 'package:sync_up/widgets/app%20bar/app_bar.dart';
 import 'package:sync_up/widgets/drawer/nav_drawer.dart';
 
 class HomePage extends ConsumerWidget {
@@ -13,27 +12,8 @@ class HomePage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       drawer: const NavDrawer(),
-      appBar: AppBar(
-        title: const Text('Events'),
-        titleTextStyle: TextStyle(
-            color: Theme.of(context).colorScheme.tertiary, fontSize: 25),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await ref.read(authProvider.notifier).signOut();
-
-              if (context.mounted) {
-                context.go(RoutePath.initial.path);
-              }
-            },
-            icon: Icon(
-              Icons.exit_to_app,
-              color: Theme.of(context).colorScheme.onBackground,
-            ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
+      appBar: const PreferredSize(preferredSize: Size.fromHeight(60), child: SyncAppBar()),
+        body: SingleChildScrollView(
           child: Column(
             children: [
                 Container(

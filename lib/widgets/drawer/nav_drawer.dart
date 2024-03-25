@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sync_up/app/router/sync_router.dart';
 
-
 class NavDrawer extends StatelessWidget {
   const NavDrawer({super.key});
 
@@ -70,9 +69,9 @@ class NavDrawer extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onBackground,
                   fontSize: 24),
             ),
-            // onTap: () {
-            //   onSelectScreen('meals');
-            // },
+            onTap: () {
+              context.go(RoutePath.home.path);
+            },
           ),
           ListTile(
             leading: Icon(
