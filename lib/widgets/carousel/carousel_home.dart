@@ -2,8 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 final List<String> imageList = [
-  '',
-  '',
+  'lib/assets/images/carousel/_DSC2137.JPG',
+  'lib/assets/images/carousel/_DSC2114.JPG',
+  'lib/assets/images/carousel/_DSC2109.JPG',
+  'lib/assets/images/carousel/_DSC2097.JPG',
+  'lib/assets/images/carousel/_DSC2092.JPG',
 ];
 
 class HomeCarousel extends StatelessWidget {
@@ -12,8 +15,16 @@ class HomeCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
-      items: items, 
-      options: options,
+      options: CarouselOptions(),
+      items: 
+        imageList
+          .map((e) => Container(
+            child: Center(
+              child: Image.asset(e),
+            ),
+          ))
+          .toList()
+      
     );
   }
 }

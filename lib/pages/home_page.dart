@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sync_up/widgets/app%20bar/app_bar.dart';
+import 'package:sync_up/widgets/carousel/carousel_home.dart';
 import 'package:sync_up/widgets/drawer/nav_drawer.dart';
 
 class HomePage extends ConsumerWidget {
@@ -40,6 +41,7 @@ class HomePage extends ConsumerWidget {
                   ),
                 ),
               ),
+              const HomeCarousel(),
             ],
           ),
         ),
