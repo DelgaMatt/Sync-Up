@@ -8,8 +8,10 @@ class NavDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      elevation: 2,
       shadowColor: Theme.of(context).colorScheme.tertiary,
       backgroundColor: Theme.of(context).colorScheme.primary,
+      surfaceTintColor: Theme.of(context).colorScheme.tertiary,
       child: Column(
         children: [
           DrawerHeader(

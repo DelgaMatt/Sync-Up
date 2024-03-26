@@ -10,6 +10,10 @@ class SyncAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AppBar(
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      surfaceTintColor: Colors.transparent,
+      elevation: 2,
+      shadowColor: Theme.of(context).colorScheme.tertiary,
       title: const Text('Sync Up'),
       titleTextStyle: TextStyle(
           color: Theme.of(context).colorScheme.tertiary, fontSize: 25),

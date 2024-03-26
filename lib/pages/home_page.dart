@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sync_up/app/router/sync_router.dart';
 
 import 'package:sync_up/widgets/app%20bar/app_bar.dart';
 import 'package:sync_up/widgets/carousel/carousel_home.dart';
@@ -41,6 +43,28 @@ class HomePage extends ConsumerWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 50),
+              OutlinedButton(
+                onPressed: () {
+                  context.go(RoutePath.events.path);
+                },
+                child: const Text( 'Events', 
+                  style: TextStyle(
+                    color: Colors.white,
+                    ),
+                  ),
+                ),
+                OutlinedButton(
+                onPressed: () {
+                  context.go(RoutePath.contact.path);
+                },
+                child: const Text( 'Contact', 
+                  style: TextStyle(
+                    color: Colors.white,
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 50),
               const HomeCarousel(),
             ],
           ),

@@ -50,7 +50,7 @@ final _routes = [
   // GoRoute(
   //   path: RoutePath.contact.path,
   //   name: 'Contact The Team',
-  //   pageBuilder: (context, state) => const MaterialPage(child: ContactPage()),
+  //   pageBuilder: (context, state) => const MaterialPage(child: ContactPage),
   //   ),
   GoRoute(
     path: RoutePath.events.path,

@@ -15,16 +15,21 @@ class HomeCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
-      options: CarouselOptions(),
+      options: CarouselOptions(
+        autoPlay: true,
+        aspectRatio: 2.0,
+        enlargeCenterPage: true,),
       items: 
         imageList
-          .map((e) => Container(
-            child: Center(
-              child: Image.asset(e),
+          .map((item) => Center(
+              child: Image.asset(
+                item,
+                fit: BoxFit.cover, 
+                width: 500,
+              ),
             ),
-          ))
+          )
           .toList()
-      
     );
   }
 }
