@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sync_up/app/router/sync_router.dart';
@@ -19,17 +20,17 @@ class HomePage extends ConsumerWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-                Container(
-                  alignment: Alignment.topCenter,
-                  margin: const EdgeInsets.only(
-                    top: 40,
-                    bottom: 20,
-                    left: 20,
-                    right: 20,
-                  ),
-                  width: 125,
-                  child: Image.asset('lib/assets/images/logo/sync_up_logo.png'),
+              Container(
+                alignment: Alignment.topCenter,
+                margin: const EdgeInsets.only(
+                  top: 40,
+                  bottom: 20,
+                  left: 20,
+                  right: 20,
                 ),
+                width: 125,
+                child: Image.asset('lib/assets/images/logo/sync_up_logo.png'),
+              ),
               const Text(style: TextStyle(fontSize: 50), 'Welcome'),
               Container(
                 padding: const EdgeInsets.all(10),
