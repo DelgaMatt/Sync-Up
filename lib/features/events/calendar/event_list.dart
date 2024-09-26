@@ -37,6 +37,8 @@ class EventListState extends State<EventList> {
                 final event = events[index];
                 return ListTile(
                   title: Text(event['event_name']),
+                  subtitle: Text(event['artists']),
+                  trailing: Text(event['event_date']),
                 );
               
               }),
