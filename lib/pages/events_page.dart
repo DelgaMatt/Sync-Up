@@ -20,7 +20,7 @@ class EventsPage extends ConsumerWidget {
           children: [
             EventCalendar(),
             SizedBox(height: 20),
-            EventList(),
+            Expanded(child: EventList()),
           ],
         ),
       ),

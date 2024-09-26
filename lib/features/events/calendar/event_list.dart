@@ -19,7 +19,7 @@ class EventListState extends State<EventList> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
+    return FutureBuilder(
         future: _events,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -30,14 +30,17 @@ class EventListState extends State<EventList> {
             return const Center(child: Text('No data found'));
           } else {
             final events = snapshot.data!;
+            print(events);
             return ListView.builder(
               itemCount: events.length,
-              itemBuilder: (context, index) {
+              itemBuilder: ((context, index) {
                 final event = events[index];
                 return ListTile(
                   title: Text(event['event_name']),
                 );
-              },
+              
+              }),
+            
             );
           }
         });
