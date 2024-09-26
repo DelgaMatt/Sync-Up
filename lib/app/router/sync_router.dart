@@ -7,12 +7,14 @@ import 'package:sync_up/pages/auth_page.dart';
 import 'package:sync_up/pages/events_page.dart';
 import 'package:sync_up/pages/home_page.dart';
 import 'package:sync_up/pages/splash_page.dart';
+import 'package:sync_up/pages/team_page.dart';
 
 final supabase = Supabase.instance.client;
 
 enum RoutePath {
   initial(path: '/'),
   home(path: '/home'),
+  team(path:'/team'),
   contact(path: '/contact'),
   events(path: '/events'),
   splash(path: '/splash'),
@@ -47,11 +49,11 @@ final _routes = [
     name: 'Home',
     pageBuilder: (context, state) => const MaterialPage(child: HomePage()),
   ),
-  // GoRoute(
-  //   path: RoutePath.contact.path,
-  //   name: 'Contact The Team',
-  //   pageBuilder: (context, state) => const MaterialPage(child: ContactPage),
-  //   ),
+  GoRoute(
+    path: RoutePath.team.path,
+    name: 'Team',
+    pageBuilder: (context, state) => const MaterialPage(child: TeamPage()),
+    ),
   GoRoute(
     path: RoutePath.events.path,
     name: 'Events',

@@ -55,11 +55,31 @@ class HomePage extends ConsumerWidget {
                     ),
                   ),
                 ),
+                // OutlinedButton(
+                // onPressed: () {
+                //   context.go(RoutePath.contact.path);
+                // },
+                // child: const Text( 'Contact', 
+                //   style: TextStyle(
+                //     color: Colors.white,
+                //     ),
+                //   ),
+                // ),
                 OutlinedButton(
                 onPressed: () {
                   context.go(RoutePath.contact.path);
                 },
-                child: const Text( 'Contact', 
+                child: const Text( 'Meet the Team', 
+                  style: TextStyle(
+                    color: Colors.white,
+                    ),
+                  ),
+                ),
+                OutlinedButton(
+                onPressed: () {
+                  context.go(RoutePath.team.path);
+                },
+                child: const Text( 'About', 
                   style: TextStyle(
                     color: Colors.white,
                     ),
