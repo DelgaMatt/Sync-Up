@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class TeamMembers {
+class TeamMember {
   final String name;
   final String bio;
   final String instagram;
   final String soundcloud;
-  final Image biopic;
-  final Image logo;
+  final String biopic;
+  final String logo;
 
-  TeamMembers({
+  const TeamMember({
     required this.name,
     required this.bio,
     required this.instagram,
@@ -17,3 +17,4 @@ class TeamMembers {
     required this.logo,
   });
 }
+

@@ -73,8 +73,21 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    # Sync Logo
      - lib/assets/images/logo/sync_up_logo.png
-     
+
+    # ArtistLogos
+     - lib/assets/images/teamData/artistLogos/Beacon-logo-white.png
+     - lib/assets/images/teamData/artistLogos/Qliff-logo-white.png
+
+    # Artist Biopic
+     - lib/assets/images/teamData/artistBiopic/Bower.png
+     - lib/assets/images/teamData/artistBiopic/Beacon.png
+     - lib/assets/images/teamData/artistBiopic/DannVilla.png
+     - lib/assets/images/teamData/artistBiopic/Qliff.png
+     - lib/assets/images/teamData/artistBiopic/ChosenOne.png
+
+    # Carousel Images
      - lib/assets/images/carousel/_DSC2137.JPG
      - lib/assets/images/carousel/_DSC2114.JPG
      - lib/assets/images/carousel/_DSC2109.JPG

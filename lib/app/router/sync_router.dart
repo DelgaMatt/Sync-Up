@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sync_up/features/authentication/auth_controller.dart';
+import 'package:sync_up/features/team_cards/data_models/team_data.dart';
+import 'package:sync_up/features/team_cards/data_models/team_model.dart';
 import 'package:sync_up/pages/auth_page.dart';
 import 'package:sync_up/pages/events_page.dart';
 import 'package:sync_up/pages/home_page.dart';
@@ -52,7 +54,7 @@ final _routes = [
   GoRoute(
     path: RoutePath.team.path,
     name: 'Team',
-    pageBuilder: (context, state) => const MaterialPage(child: TeamPage()),
+    pageBuilder: (context, state) => const MaterialPage(child: TeamPage(currentMembers: currentMembers,)),
     ),
   GoRoute(
     path: RoutePath.events.path,

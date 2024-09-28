@@ -67,7 +67,7 @@ class HomePage extends ConsumerWidget {
                 // ),
                 OutlinedButton(
                 onPressed: () {
-                  context.go(RoutePath.contact.path);
+                  context.go(RoutePath.team.path);
                 },
                 child: const Text( 'Meet the Team', 
                   style: TextStyle(
