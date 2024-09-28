@@ -25,9 +25,32 @@ class TeamPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const Text('Our team is comprosed of engineers, producers, Djs, Vjs, visual artists, photographers, and other specialists who all contribute their expertise, resulting in over a century of knowledge and experience.'),
-            const SizedBox(height: 10,),
-            const Text('Below are the founders and core group of individuals who make Sync Up possible. Click on a member to learn more and get in touch!'),
+            Container(
+                padding: const EdgeInsets.all(10),
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: const TextSpan(
+                    style: TextStyle(
+                      fontSize: 20
+                    ),
+                   text: 'Our team is comprosed of engineers, producers, Djs, Vjs, visual artists, photographers, and other specialists who all contribute their expertise, resulting in over a century of knowledge and experience.',
+                  ),
+                ),
+              ),
+            const SizedBox(height: 10),
+             Container(
+                padding: const EdgeInsets.all(10),
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: const TextSpan(
+                    style: TextStyle(
+                      fontSize: 20
+                    ),
+                   text: 'Below are the founders and core group of individuals who make Sync Up possible. Click on a member to learn more and get in touch!',
+                  ),
+                ),
+              ),
+
             for (final member in currentMembers)
             Align(
             alignment: Alignment.center,
